@@ -27,8 +27,8 @@ class Sound
     end
   end
   
-  %w{bosskill hihatclosed}.each do |name|
-    const_set name.upcase, load_sound("/#{name}.wav")
+  (1..8).each do |name|
+    const_set :"SOUND_#{name}", load_sound("/#{name}.wav")
   end
 end
 

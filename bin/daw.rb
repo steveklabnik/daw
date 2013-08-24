@@ -46,7 +46,7 @@ Shoes.app width: 500 do
           @sounds[w][h] = NullSound.new
         else
           @beatz_array[w][h].style(fill: yellow, stroke: black)
-          @sounds[w][h] = Sound::HIHATCLOSED
+          @sounds[w][h] = Sound.const_get("SOUND_#{w + 1}")
         end
         @beatz_onoff[w][h] = !@beatz_onoff[w][h]
       end
@@ -71,7 +71,6 @@ Shoes.app width: 500 do
 
     @loop = every(0.5) do |t|
       @count += 1 if @on
-      puts @count
       if @count == 8
         @cursor.left = 50
 
@@ -89,7 +88,6 @@ Shoes.app width: 500 do
           @cursor.left = @cursor.left + 50
         end
         @sounds[@count].each_with_index do |s, i|
-          puts "playing #@count #{i}: #{s.class}"
           s.play
         end
       end
