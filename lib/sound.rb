@@ -1,9 +1,10 @@
 # <3 peterc https://github.com/peterc/potc-jruby/blob/master/escape/sound.rb
+#
+# This handles actually playing the sounds via Java's APIs.
 require 'java'
 java_import javax.sound.sampled.AudioSystem
 java_import javax.sound.sampled.Clip
 java_import javax.sound.sampled.DataLine
-
 
 class Sound
   ASSETS_DIR = "#{File.dirname(__FILE__)}/../assets/sounds"
