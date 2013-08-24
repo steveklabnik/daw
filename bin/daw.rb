@@ -10,16 +10,11 @@ Shoes.app width: 500 do
   #
   # FIXME: Load up the correct songs on initialization, rather than when the
   # button is clicked.
-  @sounds = [
-    [Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new], 
-    [Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new], 
-    [Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new], 
-    [Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new], 
-    [Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new], 
-    [Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new], 
-    [Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new], 
-    [Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new, Beatz.new], 
-  ]
+  @sounds = (1..8).collect do |i|
+    (1..8).collect do
+      Beatz.new(Sound.const_get("SOUND_#{i}"))
+    end
+  end
 
   # This is the list of all of the rectangles. We need this to be separate, because
   # we have to access them independently to toggle their style.
@@ -53,12 +48,10 @@ Shoes.app width: 500 do
       @beatz_array[w][h].click do
         if @sounds[w][h].on?
           @beatz_array[w][h].style(fill: black, stroke: gray)
-          @sounds[w][h] = Beatz.new
         else
           @beatz_array[w][h].style(fill: yellow, stroke: black)
-          @sounds[w][h] = Beatz.new(Sound.const_get("SOUND_#{w + 1}"))
-          @sounds[w][h].toggle
         end
+        @sounds[w][h].toggle
       end
     end
   end
