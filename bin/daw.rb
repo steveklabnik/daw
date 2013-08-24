@@ -1,7 +1,8 @@
+# encoding: UTF-8
 $:.unshift("#{File.dirname(__FILE__)}/../lib")
 require 'sound'
 
-Shoes.app do
+Shoes.app width: 500 do
   fill black 
 
   @sounds = [
@@ -56,8 +57,12 @@ Shoes.app do
     @count = -1
     @on = false
 
-    button "start" do
+    @start = button "start" do
       @on = true
+    end
+    flow do
+      @will_loop = check
+      para "🔁"
     end
 
 
@@ -68,10 +73,15 @@ Shoes.app do
       @count += 1 if @on
       puts @count
       if @count == 8
-        @on = false
-        @count = -1
         @cursor.left = 50
-        @cursor.hide
+
+        if @will_loop.checked?
+          @count = 0
+        else
+          @on = false
+          @count = -1
+          @cursor.hide
+        end
       elsif @count != -1
         if @count == 0
           @cursor.show
@@ -84,6 +94,5 @@ Shoes.app do
         end
       end
     end
-
   end
 end
